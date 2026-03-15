@@ -6,175 +6,68 @@
     <title>Zory's Creaciones | Tejidos Artesanales</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'porcelain': '#ECE4DB',
+                        'rosewood': '#C4A69B',
+                        'stone': '#B8AB9C',
+                        'parchment': '#CFC8BE',
+                        'olive': '#BAB8A2',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
+        body { font-family: 'Poppins', sans-serif; background-color: #ECE4DB; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
         
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-        }
-
-        .product-card {
-            transition: all 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
+        .product-card { transition: all 0.3s ease; background: white; animation: slideIn 0.5s ease-out; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
 
         .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 30px;
-            right: 30px;
-            background-color: #25d366;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            cursor: pointer;
+            position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px;
+            background-color: #BAB8A2; color: #FFF; border-radius: 50px;
+            text-align: center; font-size: 30px; box-shadow: 2px 2px 15px rgba(0,0,0,0.1);
+            z-index: 100; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s; cursor: pointer;
         }
-
-        .whatsapp-float:hover {
-            background-color: #128C7E;
-            transform: scale(1.1);
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-            color: white;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 99;
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
-            transition: all 0.3s;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.6);
-        }
-
-        .back-to-top.show {
-            display: flex;
-        }
-
-        #loading {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 50%, #7c3aed 100%);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-
-        #loading.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(255,255,255,0.3);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        .whatsapp-float:hover { background-color: #C4A69B; transform: scale(1.1); }
 
         .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #ef4444;
-            color: white;
-            border-radius: 50%;
-            width: 22px;
-            height: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
+            position: absolute; top: -8px; right: -8px; background: #C4A69B;
+            color: white; border-radius: 50%; width: 22px; height: 22px;
+            display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;
         }
 
-        .category-btn {
-            transition: all 0.3s;
-        }
+        .category-btn { transition: all 0.3s; background: white; border: 1px solid #ECE4DB; }
+        .category-btn.active { background: #C4A69B; color: white; border-color: #C4A69B; }
 
-        .category-btn.active {
-            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
-        }
+        .hero { background: linear-gradient(135deg, #B8AB9C 0%, #ECE4DB 100%); }
 
-        .hero {
-            background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 50%, #7c3aed 100%);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .product-card {
-            animation: slideIn 0.5s ease-out;
-        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="text-gray-800">
 
-    <!-- Loading Screen -->
-    <div id="loading">
-        <div class="text-center">
-            <div class="spinner mx-auto mb-4"></div>
-            <p class="text-white text-lg font-semibold">Cargando...</p>
-        </div>
-    </div>
-
-    <!-- Navegación -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
+    <nav class="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
+            <div class="flex justify-between items-center h-24">
                 <div class="flex items-center">
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-violet-600 bg-clip-text text-transparent">✨ Zory's Creaciones</h1>
+                    <img src="logo.jpeg" alt="Zory Crochet Logo" class="h-16 w-auto object-contain">
                 </div>
+                
                 <div class="hidden md:flex space-x-8">
-                    <a href="#productos" class="text-gray-700 hover:text-purple-600 transition font-medium">Productos</a>
-                    <a href="#nosotros" class="text-gray-700 hover:text-purple-600 transition font-medium">Nosotros</a>
-                    <a href="#contacto" class="text-gray-700 hover:text-purple-600 transition font-medium">Contacto</a>
+                    <a href="#productos" class="text-gray-600 hover:text-rosewood transition font-medium">Productos</a>
+                    <a href="#nosotros" class="text-gray-600 hover:text-rosewood transition font-medium">Nosotros</a>
+                    <a href="#contacto" class="text-gray-600 hover:text-rosewood transition font-medium">Contacto</a>
                 </div>
-                <button onclick="toggleCart()" class="relative p-3 bg-purple-50 rounded-full hover:bg-purple-100 transition">
-                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                <button onclick="toggleCart()" class="relative p-3 bg-porcelain rounded-full hover:bg-parchment transition">
+                    <svg class="w-6 h-6 text-rosewood" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
                     <span id="cartCount" class="cart-badge">0</span>
@@ -183,357 +76,156 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero py-24 px-4 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-purple-900/50 to-violet-900/50"></div>
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <h2 class="text-5xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">Tejidos Artesanales Únicos</h2>
-            <p class="text-xl text-purple-100 mb-8">Ropa para bebé y accesorios para el hogar, cada pieza tejida con amor y dedicación</p>
-            <a href="#productos" class="inline-block bg-gradient-to-r from-purple-600 to-violet-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-700 hover:to-violet-700 transition shadow-2xl transform hover:scale-105">Explorar Productos</a>
+    <section class="hero py-20 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-5xl md:text-6xl font-bold text-gray-800 mb-6">Tejidos con Amor</h2>
+            <p class="text-xl text-gray-700 mb-8">Piezas únicas hechas a mano que cuentan una historia en cada puntada.</p>
+            <a href="#productos" class="inline-block bg-rosewood text-white px-8 py-4 rounded-full font-semibold hover:bg-stone transition shadow-lg">Ver Catálogo</a>
         </div>
     </section>
 
-    <!-- Productos Section -->
     <section id="productos" class="py-16 px-4">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-4">Nuestros Productos</h2>
-            <p class="text-center text-gray-600 mb-12">Encuentra lo perfecto para tu bebé</p>
+            <h2 class="text-4xl font-bold text-center mb-12">Nuestra Colección</h2>
 
-            <!-- Filtros de Categoría -->
             <div class="flex flex-wrap justify-center gap-3 mb-12">
-                <button onclick="filterCategory('todos')" class="category-btn active px-6 py-2 rounded-full bg-gray-100 text-gray-700 font-medium">Todos</button>
-                <button onclick="filterCategory('vestidos')" class="category-btn px-6 py-2 rounded-full bg-gray-100 text-gray-700 font-medium">Vestidos</button>
-                <button onclick="filterCategory('conjuntos')" class="category-btn px-6 py-2 rounded-full bg-gray-100 text-gray-700 font-medium">Conjuntos</button>
-                <button onclick="filterCategory('gorritos')" class="category-btn px-6 py-2 rounded-full bg-gray-100 text-gray-700 font-medium">Gorritos</button>
-                <button onclick="filterCategory('zapatitos')" class="category-btn px-6 py-2 rounded-full bg-gray-100 text-gray-700 font-medium">Zapatitos</button>
-                <button onclick="filterCategory('munecas')" class="category-btn px-6 py-2 rounded-full bg-gray-100 text-gray-700 font-medium">Ropa Muñecas</button>
-                <button onclick="filterCategory('hogar')" class="category-btn px-6 py-2 rounded-full bg-gray-100 text-gray-700 font-medium">Para el Hogar</button>
+                <button onclick="filterCategory('todos')" class="category-btn active px-6 py-2 rounded-full shadow-sm text-gray-700 font-medium">Todos</button>
+                <button onclick="filterCategory('vestidos')" class="category-btn px-6 py-2 rounded-full shadow-sm text-gray-700 font-medium">Vestidos</button>
+                <button onclick="filterCategory('accesorios')" class="category-btn px-6 py-2 rounded-full shadow-sm text-gray-700 font-medium">Cabello</button>
+                <button onclick="filterCategory('niños')" class="category-btn px-6 py-2 rounded-full shadow-sm text-gray-700 font-medium">Niños</button>
+                <button onclick="filterCategory('hogar')" class="category-btn px-6 py-2 rounded-full shadow-sm text-gray-700 font-medium">Hogar</button>
             </div>
 
-            <!-- Grilla de Productos -->
             <div id="productGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
         </div>
     </section>
 
-    <!-- Nosotros Section -->
-    <section id="nosotros" class="bg-white py-16 px-4">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-bold mb-6">Sobre Nosotros</h2>
-            <p class="text-lg text-gray-600 mb-6">Somos artesanos apasionados por crear piezas únicas y especiales. Cada producto está tejido a mano con materiales de alta calidad, tanto para los más pequeños del hogar como para embellecer tu espacio.</p>
-            <p class="text-lg text-gray-600">Nuestro compromiso es entregar calidad, calidez y amor en cada puntada. Desde ropa de bebé hasta accesorios decorativos para tu hogar.</p>
+    <section id="nosotros" class="bg-white py-20 px-4">
+        <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <img src="logo.jpeg" alt="Sobre Nosotros" class="rounded-2xl border border-porcelain">
+            <div>
+                <h2 class="text-4xl font-bold mb-6 text-stone">Sobre Nosotros</h2>
+                <p class="text-lg text-gray-600">En <strong>Zory's Creaciones</strong>, transformamos hilos en arte. Cada vestido, gorrito y accesorio es tejido a mano en España, buscando siempre la máxima suavidad para los bebés y elegancia para tu hogar.</p>
+            </div>
         </div>
     </section>
 
-    <!-- Contacto Section -->
-    <section id="contacto" class="py-16 px-4 bg-gradient-to-br from-purple-50 to-violet-50">
+    <section id="contacto" class="py-16 px-4 bg-parchment/30 text-center">
         <div class="max-w-2xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-12">Contáctanos</h2>
-            <form id="contactForm" class="bg-white p-8 rounded-2xl shadow-lg">
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2">Nombre *</label>
-                    <input type="text" name="nombre" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
-                </div>
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2">Email *</label>
-                    <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
-                </div>
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2">Mensaje *</label>
-                    <textarea name="mensaje" required rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
-                </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-violet-600 text-white py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-violet-700 transition shadow-lg">Enviar por WhatsApp</button>
-            </form>
+            <h2 class="text-4xl font-bold mb-8">¿Tienes un pedido especial?</h2>
+            <p class="mb-8 text-gray-600">Escríbenos y personalizamos tu prenda favorita.</p>
+            <a href="https://wa.me/34653045144" class="inline-block bg-olive text-white px-10 py-4 rounded-full font-semibold hover:bg-stone transition">Hablar por WhatsApp</a>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gradient-to-r from-purple-900 to-violet-900 text-white py-8 px-4">
-        <div class="max-w-7xl mx-auto text-center">
-            <p class="text-purple-200">© 2025 Zory's Creaciones. Hecho con 💜 para tu bebé y tu hogar</p>
-        </div>
+    <footer class="bg-stone text-white py-8 text-center">
+        <p>© 2025 Zory's Creaciones. Handmade in Spain 💜</p>
     </footer>
 
-    <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/34653045144?text=Hola!%20Quiero%20hacer%20una%20consulta" target="_blank" class="whatsapp-float">
-        <span style="margin-top: 4px;">💬</span>
-    </a>
+    <a href="https://wa.me/34653045144" target="_blank" class="whatsapp-float"><span>💬</span></a>
 
-    <!-- Botón Volver Arriba -->
-    <div class="back-to-top" id="backToTop" onclick="scrollToTop()">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
-        </svg>
-    </div>
-
-    <!-- Carrito Modal -->
-    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div id="cartModal" class="fixed inset-0 bg-black/40 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
             <div class="p-6 border-b flex justify-between items-center">
-                <h3 class="text-2xl font-bold">Carrito de Compras</h3>
-                <button onclick="toggleCart()" class="text-gray-500 hover:text-gray-700 text-3xl">&times;</button>
+                <h3 class="text-2xl font-bold">Tu Carrito</h3>
+                <button onclick="toggleCart()" class="text-gray-400 text-3xl">&times;</button>
             </div>
             <div id="cartItems" class="flex-grow overflow-y-auto p-6"></div>
-            <div class="border-t p-6">
+            <div class="border-t p-6 bg-porcelain/20">
                 <div class="flex justify-between items-center mb-4">
                     <span class="text-xl font-semibold">Total:</span>
-                    <span id="cartTotal" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-violet-600 bg-clip-text text-transparent">$0</span>
+                    <span id="cartTotal" class="text-2xl font-bold text-rosewood">$0</span>
                 </div>
-                <button onclick="sendWhatsAppOrder()" class="w-full bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition">
-                    Enviar Pedido por WhatsApp
-                </button>
+                <button onclick="sendWhatsAppOrder()" class="w-full bg-rosewood text-white py-3 rounded-lg font-semibold hover:bg-stone transition">Confirmar Pedido</button>
             </div>
-        </div>
-    </div>
-
-    <!-- Modal Imagen Producto -->
-    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-95 hidden z-[60]" onclick="closeImageModal()">
-        <button onclick="closeImageModal()" class="absolute top-6 right-6 text-white text-5xl hover:text-purple-300 z-[70]">&times;</button>
-        <div class="h-full flex items-center justify-center p-4">
-            <img id="modalImage" src="" alt="" class="max-w-full max-h-[90vh] object-contain">
         </div>
     </div>
 
     <script>
-        // Datos de productos con más información
         const products = [
-            { id: 1, name: "Vestido Rosa Bebé", category: "vestidos", price: 3500, image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400&h=400&fit=crop", material: "Algodón 100%", sizes: "0-6 meses", time: "3-5 días", featured: true },
-            { id: 2, name: "Conjunto Completo Azul", category: "conjuntos", price: 5500, image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=400&h=400&fit=crop", material: "Lana suave", sizes: "0-12 meses", time: "5-7 días", featured: true },
-            { id: 3, name: "Gorrito con Orejas", category: "gorritos", price: 1500, image: "https://images.unsplash.com/photo-1596870230751-ebdfce98ec42?w=400&h=400&fit=crop", material: "Algodón", sizes: "Universal", time: "2-3 días", featured: false },
-            { id: 4, name: "Zapatitos Tejidos", category: "zapatitos", price: 1200, image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=400&h=400&fit=crop", material: "Algodón suave", sizes: "0-6 meses", time: "2-3 días", featured: true },
-            { id: 5, name: "Vestido Blanco Elegante", category: "vestidos", price: 4000, image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400&h=400&fit=crop", material: "Algodón premium", sizes: "6-12 meses", time: "4-6 días", featured: false },
-            { id: 6, name: "Conjunto Rosa + Gorrito", category: "conjuntos", price: 6000, image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=400&h=400&fit=crop", material: "Lana y algodón", sizes: "0-12 meses", time: "5-7 días", featured: true },
-            { id: 7, name: "Gorrito Osito", category: "gorritos", price: 1800, image: "https://images.unsplash.com/photo-1596870230751-ebdfce98ec42?w=400&h=400&fit=crop", material: "Lana hipoalergénica", sizes: "Universal", time: "2-3 días", featured: false },
-            { id: 8, name: "Camino de Mesa Floral", category: "hogar", price: 2500, image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop", material: "Hilo de algodón", sizes: "120x30 cm", time: "4-5 días", featured: false },
-            { id: 9, name: "Mantel Individual", category: "hogar", price: 1800, image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop", material: "Hilo resistente", sizes: "40x30 cm", time: "2-3 días", featured: false },
-            { id: 10, name: "Conjunto Completo Amarillo", category: "conjuntos", price: 5800, image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=400&h=400&fit=crop", material: "Algodón orgánico", sizes: "0-12 meses", time: "5-7 días", featured: false },
-            { id: 11, name: "Vestido Barbie Rosa", category: "munecas", price: 800, image: "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=400&h=400&fit=crop", material: "Hilo fino", sizes: "Barbie estándar", time: "1-2 días", featured: false },
-            { id: 12, name: "Conjunto Muñeca Bebé", category: "munecas", price: 1200, image: "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=400&h=400&fit=crop", material: "Hilo suave", sizes: "30-40 cm", time: "2-3 días", featured: false },
+            { id: 1, name: "Vestido Artesanal Blanco", category: "vestidos", price: 3500, image: "vestidos.jpeg" },
+            { id: 2, name: "Vestido de Gala Tejido", category: "vestidos", price: 3800, image: "vestidos (2).jpeg" },
+            { id: 3, name: "Conjunto Vestido Primavera", category: "vestidos", price: 3500, image: "vestidos (3).jpeg" },
+            { id: 4, name: "Vestido Elegante Rosa", category: "vestidos", price: 4000, image: "vestidos (4).jpeg" },
+            { id: 5, name: "Vestido Clásico Zory", category: "vestidos", price: 3500, image: "vestidos (5).jpeg" },
+            { id: 6, name: "Vestido Detalle Floral", category: "vestidos", price: 3700, image: "vestidos (6).jpeg" },
+            { id: 7, name: "Gorrito para Niños", category: "niños", price: 1500, image: "para niños-gorritos.jpeg" },
+            { id: 8, name: "Set de Collets (Coleteros)", category: "accesorios", price: 800, image: "collets-para el cabello.jpeg" },
+            { id: 9, name: "Coleteros Artesanales Duo", category: "accesorios", price: 800, image: "collets-para el cabello (2).jpeg" },
+            { id: 10, name: "Decoración para el Hogar", category: "hogar", price: 2500, image: "para el hogar.jpeg" }
         ];
 
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let currentCategory = 'todos';
-        let currentRating = 0;
-        let testimonials = JSON.parse(localStorage.getItem('testimonials')) || [
-            { name: "María González", text: "Hermosos productos, mi bebé se ve adorable con su conjunto tejido. ¡100% recomendado!", rating: 5 },
-            { name: "Laura Pérez", text: "Calidad excepcional y muy buen precio. El gorrito quedó perfecto.", rating: 5 },
-            { name: "Ana Martínez", text: "Me encantó el camino de mesa, quedó hermoso en mi comedor. Volveré a comprar.", rating: 5 },
-        ];
 
-        // ===== TODAS LAS FUNCIONES PRIMERO =====
-        let currentProductId = null;
-
-        // Abrir modal de producto
-        window.openProductModal = (productId) => {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-            
-            currentProductId = productId;
-            
-            document.getElementById('productModalImg').src = product.image;
-            document.getElementById('productModalTitle').textContent = product.name;
-            document.getElementById('productModalCategory').textContent = product.category.toUpperCase();
-            document.getElementById('productModalPrice').textContent = `${product.price}`;
-            document.getElementById('productModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        };
-
-        // Cerrar modal de producto
-        window.closeProductModal = (event) => {
-            if (event && event.target !== event.currentTarget && !event.target.closest('button')) return;
-            document.getElementById('productModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-            currentProductId = null;
-        };
-
-        // Agregar al carrito desde modal
-        window.addToCartFromModal = () => {
-            if (currentProductId) {
-                addToCart(currentProductId);
-                closeProductModal();
-            }
-        };
-
-        // Abrir modal de imagen
-        function openImageModal(imageSrc, altText) {
-            document.getElementById('modalImage').src = imageSrc;
-            document.getElementById('modalImage').alt = altText;
-            document.getElementById('imageModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // Cerrar modal de imagen
-        function closeImageModal() {
-            document.getElementById('imageModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Renderizar productos
         function renderProducts() {
             const grid = document.getElementById('productGrid');
-            const filtered = currentCategory === 'todos' 
-                ? products 
-                : products.filter(p => p.category === currentCategory);
-            
+            const filtered = currentCategory === 'todos' ? products : products.filter(p => p.category === currentCategory);
             grid.innerHTML = filtered.map(product => `
-                <div class="product-card bg-white rounded-2xl overflow-hidden shadow-lg">
-                    <div class="relative h-64 overflow-hidden bg-gray-100">
-                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+                <div class="product-card rounded-2xl overflow-hidden border border-porcelain">
+                    <div class="h-80 bg-porcelain">
+                        <img src="${product.image}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x500?text=Cargando+Imagen...'">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">${product.name}</h3>
-                        <p class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-violet-600 bg-clip-text text-transparent mb-4">${product.price}</p>
-                        <button onclick="addToCart(${product.id})" class="w-full bg-gradient-to-r from-purple-600 to-violet-600 text-white py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-violet-700 transition shadow-lg transform hover:scale-105">
-                            Agregar al Carrito
-                        </button>
+                        <p class="text-2xl font-bold text-rosewood mb-4">$${product.price}</p>
+                        <button onclick="addToCart(${product.id})" class="w-full bg-rosewood text-white py-3 rounded-lg font-semibold hover:bg-stone transition">Agregar al Carrito</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Filtrar por categoría
-        function filterCategory(category) {
-            currentCategory = category;
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
             renderProducts();
         }
 
-        // Agregar al carrito
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            const existingItem = cart.find(item => item.id === productId);
-            
-            if (existingItem) {
-                existingItem.quantity++;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
-            
+        function addToCart(id) {
+            const p = products.find(x => x.id === id);
+            const i = cart.find(x => x.id === id);
+            if (i) i.quantity++; else cart.push({...p, quantity: 1});
             updateCart();
-            showNotification('Producto agregado al carrito ✓');
         }
 
-        // Actualizar carrito
         function updateCart() {
             localStorage.setItem('cart', JSON.stringify(cart));
-            document.getElementById('cartCount').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = cart.reduce((s, i) => s + i.quantity, 0);
             renderCart();
         }
 
-        // Renderizar carrito
         function renderCart() {
-            const cartItems = document.getElementById('cartItems');
-            const cartTotal = document.getElementById('cartTotal');
-            
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p class="text-center text-gray-500">El carrito está vacío</p>';
-                cartTotal.textContent = '$0';
-                return;
-            }
-            
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            cartItems.innerHTML = cart.map(item => `
-                <div class="flex items-center gap-4 mb-4 pb-4 border-b">
-                    <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded-lg">
-                    <div class="flex-grow">
-                        <h4 class="font-semibold">${item.name}</h4>
-                        <p class="bg-gradient-to-r from-purple-600 to-violet-600 bg-clip-text text-transparent font-bold">${item.price}</p>
-                    </div>
+            const c = document.getElementById('cartItems');
+            const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+            c.innerHTML = cart.length ? cart.map(i => `
+                <div class="flex items-center gap-4 mb-4 pb-4 border-b border-porcelain">
+                    <div class="flex-grow"><h4 class="font-semibold">${i.name}</h4><p class="text-rosewood font-bold">$${i.price}</p></div>
                     <div class="flex items-center gap-2">
-                        <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 bg-gray-200 rounded-full hover:bg-gray-300">-</button>
-                        <span class="w-8 text-center font-semibold">${item.quantity}</span>
-                        <button onclick="updateQuantity(${item.id}, 1)" class="w-8 h-8 bg-gray-200 rounded-full hover:bg-gray-300">+</button>
+                        <button onclick="updateQty(${i.id},-1)" class="w-8 h-8 bg-porcelain rounded-full">-</button>
+                        <span class="font-bold">${i.quantity}</span>
+                        <button onclick="updateQty(${i.id},1)" class="w-8 h-8 bg-porcelain rounded-full">+</button>
                     </div>
-                    <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                        </svg>
-                    </button>
                 </div>
-            `).join('');
-            
-            cartTotal.textContent = `$${total}`;
+            `).join('') : '<p class="text-center text-gray-400">Carrito vacío</p>';
+            document.getElementById('cartTotal').textContent = `$${total}`;
         }
 
-        // Actualizar cantidad
-        function updateQuantity(productId, change) {
-            const item = cart.find(i => i.id === productId);
-            if (item) {
-                item.quantity += change;
-                if (item.quantity <= 0) {
-                    removeFromCart(productId);
-                    } else {
-                    updateCart();
-                }
-            }
+        function updateQty(id, chg) {
+            const i = cart.find(x => x.id === id);
+            if (i) { i.quantity += chg; if (i.quantity <= 0) cart = cart.filter(x => x.id !== id); updateCart(); }
         }
 
-        // Remover del carrito
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            updateCart();
-        }
+        function toggleCart() { document.getElementById('cartModal').classList.toggle('hidden'); }
 
-        // Toggle carrito
-        function toggleCart() {
-            document.getElementById('cartModal').classList.toggle('hidden');
-        }
-
-        // Enviar pedido por WhatsApp
         function sendWhatsAppOrder() {
-            if (cart.length === 0) {
-                alert('El carrito está vacío');
-                return;
-            }
-            
-            const message = cart.map(item => 
-                `• ${item.name} x${item.quantity} - $${item.price * item.quantity}`
-            ).join('%0A');
-            
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const fullMessage = `Hola! Quiero hacer un pedido:%0A%0A${message}%0A%0ATotal: ${total}`;
-            
-            window.open(`https://wa.me/34653045144?text=${fullMessage}`, '_blank');
+            if (!cart.length) return;
+            const msg = cart.map(i => `• ${i.name} (x${i.quantity})`).join('%0A');
+            const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+            window.open(`https://wa.me/34653045144?text=Hola! Me gustaría encargar:%0A${msg}%0A%0ATotal: $${total}`);
         }
 
-        // Notificación
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'fixed top-24 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            setTimeout(() => notification.remove(), 2000);
-        }
-
-        // Formulario de contacto - Envía a WhatsApp
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const nombre = e.target[0].value;
-            const email = e.target[1].value;
-            const mensaje = e.target[2].value;
-            
-            const whatsappMessage = `*Nuevo mensaje de contacto*%0A%0A` +
-                `*Nombre:* ${nombre}%0A` +
-                `*Email:* ${email}%0A` +
-                `*Mensaje:* ${mensaje}`;
-            
-            // CAMBIA ESTE NÚMERO POR EL DE TU MAMÁ (con código de país sin +)
-            // Ejemplo: 5491123456789 (54 Argentina, 911 Buenos Aires, 23456789)
-            const phoneNumber = '34653045144'; // España
-            
-            window.open(`https://wa.me/${phoneNumber}?text=${whatsappMessage}`, '_blank');
-            
-            showNotification('Redirigiendo a WhatsApp... ✓');
-            e.target.reset();
-        });
-
-        // Inicializar
         renderProducts();
-        renderFeaturedProducts();
         updateCart();
     </script>
 </body>
