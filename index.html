@@ -25,33 +25,16 @@
         body { font-family: 'Poppins', sans-serif; background-color: #ECE4DB; scroll-behavior: smooth; overflow-x: hidden; }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
         
-        /* --- ANIMACIONES Y MEJORAS VISUALES --- */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .fade-up.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+        .fade-up.show { opacity: 1; transform: translateY(0); }
 
         .product-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); background: white; cursor: pointer; }
-        .product-card:hover { 
-            transform: translateY(-8px) scale(1.02); 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.12); 
-        }
+        .product-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 30px 60px rgba(0,0,0,0.12); }
 
         nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 
-        /* Animación Modal */
         #productModal.flex > div { animation: zoomIn 0.35s ease; }
-        @keyframes zoomIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        img { transition: transform 0.7s ease, opacity 0.3s ease; }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         .category-btn { transition: all 0.3s ease; background: white; color: #6B7280; border: 1px solid #E5E7EB; }
         .category-btn.active { background: #C4A69B; color: white; border-color: #C4A69B; transform: scale(1.05); }
@@ -64,9 +47,9 @@
         }
         .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); background-color: #C4A69B; }
 
-        /* Ajuste específico para que las fotos no se corten en el modal móvil */
+        /* Corrección crítica para visualización en móvil */
         @media (max-width: 768px) {
-            #modalImg { object-fit: contain; background-color: #f3f4f6; }
+            #modalImg { object-fit: contain; background-color: #f9f9f9; }
         }
     </style>
 </head>
@@ -97,39 +80,33 @@
                 <div class="flex flex-wrap justify-center gap-2 md:gap-4">
                     <button onclick="filterProducts('Todos')" class="category-btn active px-6 py-2 rounded-full font-semibold text-sm" data-category="Todos">Todos</button>
                     <button onclick="filterProducts('Vestidos')" class="category-btn px-6 py-2 rounded-full font-semibold text-sm" data-category="Vestidos">Vestidos</button>
-                    <button onclick="filterProducts('Cabello')" class="category-btn px-6 py-2 rounded-full font-semibold text-sm" data-category="Cabello">Cabello</button>
                     <button onclick="filterProducts('Niños')" class="category-btn px-6 py-2 rounded-full font-semibold text-sm" data-category="Niños">Niños</button>
+                    <button onclick="filterProducts('Hogar')" class="category-btn px-6 py-2 rounded-full font-semibold text-sm" data-category="Hogar">Hogar</button>
+                    <button onclick="filterProducts('Cabello')" class="category-btn px-6 py-2 rounded-full font-semibold text-sm" data-category="Cabello">Cabello</button>
                 </div>
             </div>
 
-            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                </div>
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
         </div>
     </section>
 
     <div id="productModal" onclick="if(event.target == this) closeProductModal()" class="fixed inset-0 bg-black/90 hidden z-[100] items-center justify-center p-2 md:p-6 backdrop-blur-md">
         <div class="bg-white rounded-[2rem] max-w-5xl w-full max-h-[95vh] overflow-hidden flex flex-col md:flex-row shadow-2xl relative">
-            
             <button onclick="closeProductModal()" class="md:hidden absolute top-4 right-4 z-10 bg-white/90 rounded-full w-10 h-10 flex items-center justify-center shadow-md text-2xl">&times;</button>
-
-            <div class="w-full md:w-1/2 bg-porcelain h-72 md:h-auto overflow-hidden relative">
+            <div class="w-full md:w-1/2 bg-porcelain h-64 md:h-auto overflow-hidden relative">
                 <img id="modalImg" src="" class="w-full h-full object-contain md:object-cover">
             </div>
-
             <div class="w-full md:w-1/2 p-6 md:p-10 flex flex-col bg-white overflow-y-auto">
                 <button onclick="closeProductModal()" class="hidden md:block absolute top-6 right-6 text-gray-300 hover:text-rosewood text-4xl">&times;</button>
-                
                 <div class="flex-grow">
                     <span id="modalCat" class="text-[10px] font-black text-rosewood uppercase tracking-widest"></span>
                     <h3 id="modalTitle" class="text-2xl md:text-4xl font-bold mt-2 mb-2 text-gray-900 leading-tight"></h3>
                     <p id="modalPrice" class="text-xl md:text-3xl font-bold text-stone mb-4 md:mb-8"></p>
-                    
                     <div class="border-t border-gray-100 pt-4 md:pt-6">
                         <h4 class="font-bold text-gray-800 uppercase text-xs mb-2">Detalles:</h4>
                         <p id="modalDesc" class="text-gray-600 text-sm md:text-lg leading-relaxed"></p>
                     </div>
                 </div>
-
                 <button id="modalAddBtn" class="w-full bg-rosewood text-white py-4 md:py-5 rounded-2xl font-bold text-lg md:text-xl shadow-lg mt-6 active:scale-95 transition-transform">
                     Añadir al Carrito 💖
                 </button>
@@ -158,20 +135,24 @@
 
     <script>
         const products = [
-            { id: 1, name: "Vestido Artesanal Flower", price: 45, image: "vestidos.jpeg", category: "Vestidos", info: "Diseño vibrante con girasoles tejidos a mano. Incluye vestido, gorrito artesanal y zapatitos." },
-            { id: 2, name: "Vestido de Gala Tejido", price: 50, image: "vestidos (2).jpeg", category: "Vestidos", info: "Elegancia en rosa empolvado con acabados en blanco. Tejido suave de alta calidad." },
-            { id: 3, name: "Vestido Primavera Soft", price: 42, image: "vestidos (3).jpeg", category: "Vestidos", info: "Color blanco hueso con detalles calados, ideal para días soleados." },
-            { id: 4, name: "Vestido Libélula Baby", price: 38, image: "vestidos (4).jpeg", category: "Vestidos", info: "Color verde menta con aplicaciones tejidas de flores naturales." },
-            { id: 8, name: "Dúo Coleteros Algodón", price: 10, image: "collets-para el cabello.jpeg", category: "Cabello", info: "Pack de 2 coleteros tejidos en algodón orgánico que no dañan el pelo." }
+            { id: 1, name: "Vestido Artesanal Flower", price: 45, image: "vestidos.jpeg", category: "Vestidos", info: "Diseño vibrante con girasoles tejidos a mano. Pack incluye vestido, gorrito y zapatitos." },
+            { id: 2, name: "Vestido de Gala Tejido", price: 50, image: "vestidos (2).jpeg", category: "Vestidos", info: "Elegancia en rosa empolvado con acabados blancos. Perfecto para ceremonias." },
+            { id: 3, name: "Vestido Primavera Lavanda", price: 48, image: "niña.page.jpeg", category: "Vestidos", info: "Tono lavanda con flores en relieve y falda calada. Incluye diadema artesanal." },
+            { id: 4, name: "Vestido Libélula Baby", price: 38, image: "vestidos (4).jpeg", category: "Vestidos", info: "Color verde menta con aplicaciones tejidas de flores inspiradas en la naturaleza." },
+            { id: 5, name: "Vestido Abejita Sweet", price: 45, image: "vestidos (5).jpeg", category: "Vestidos", info: "Divertido diseño de abejita con gorrito decorado y detalles tejidos a mano." },
+            { id: 6, name: "Conjunto Marinero Tractor", price: 40, image: "niño.page.jpeg", category: "Niños", info: "Peto a rayas náuticas y gorrito con detalle de tractor artesanal." },
+            { id: 7, name: "Set Invierno Osito", price: 25, image: "para niños-gorritos.jpeg", category: "Niños", info: "Gorrito con orejitas y patucos a juego en azul cielo, ideal para bebés." },
+            { id: 8, name: "Guirnalda Floral Home", price: 30, image: "para el hogar.jpeg", category: "Hogar", info: "Decoración colgante con flores de colores pasteles para un toque natural." },
+            { id: 9, name: "Llavero Ladybug Charm", price: 12, image: "llavero.page.jpeg", category: "Hogar", info: "Accesorio detallado con mariquitas y flores tejidas. Ideal para mochilas." },
+            { id: 10, name: "Llavero Ocean Shells", price: 12, image: "llavero-caracol.page.jpeg", category: "Hogar", info: "Motivos marinos con conchas y estrellas de mar en tonos dorados." },
+            { id: 11, name: "Set Perlas Daisy", price: 25, image: "collar1.2.page.jpeg", category: "Hogar", info: "Collar y pulsera de perlas con delicado dije de margarita blanca." },
+            { id: 12, name: "Gargantilla Coquette Bow", price: 22, image: "collar-coquette.2.page.jpeg", category: "Hogar", info: "Cuentas violetas con lazo central. Tendencia coquette hecha a mano." },
+            { id: 13, name: "Scrunchie Perlas Brown", price: 10, image: "collets-para el cabello (2).jpeg", category: "Cabello", info: "Coletero chocolate decorado con perlas blancas brillantes." }
         ];
 
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        // Observer para animaciones de scroll
         const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('show');
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('show'); });
         }, { threshold: 0.1 });
 
         function renderProducts(list) {
@@ -192,54 +173,30 @@
         function openProductModal(id) {
             const p = products.find(x => x.id === id);
             if (!p) return;
-
-            const mainImg = document.getElementById('modalImg');
-            mainImg.style.opacity = 0;
-            setTimeout(() => { mainImg.src = p.image; mainImg.style.opacity = 1; }, 150);
-
+            document.getElementById('modalImg').src = p.image;
             document.getElementById('modalTitle').textContent = p.name;
             document.getElementById('modalPrice').textContent = p.price + "€";
             document.getElementById('modalDesc').textContent = p.info;
             document.getElementById('modalCat').textContent = p.category;
-            
             document.getElementById('modalAddBtn').onclick = () => { addToCart(p.id); closeProductModal(); };
-            
-            const modal = document.getElementById('productModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            
-            // Resetear scroll del texto
-            const scrollArea = modal.querySelector('.overflow-y-auto');
-            if(scrollArea) scrollArea.scrollTop = 0;
-            
+            const m = document.getElementById('productModal');
+            m.classList.remove('hidden'); m.classList.add('flex');
+            m.querySelector('.overflow-y-auto').scrollTop = 0;
             document.body.style.overflow = 'hidden';
         }
 
-        function closeProductModal() {
-            document.getElementById('productModal').classList.replace('flex', 'hidden');
-            document.body.style.overflow = 'auto';
-        }
-
+        function closeProductModal() { document.getElementById('productModal').classList.replace('flex', 'hidden'); document.body.style.overflow = 'auto'; }
         function addToCart(id) {
             const p = products.find(x => x.id === id);
             const item = cart.find(x => x.id === id);
             if (item) item.quantity++; else cart.push({...p, quantity: 1});
             updateCart();
-            animateCart();
         }
-
-        function animateCart() {
-            const btn = document.getElementById('cartBtn');
-            btn.classList.add('scale-125');
-            setTimeout(() => btn.classList.remove('scale-125'), 200);
-        }
-
         function updateCart() {
             localStorage.setItem('cart', JSON.stringify(cart));
             document.getElementById('cartCount').textContent = cart.reduce((s, i) => s + i.quantity, 0);
             renderCart();
         }
-
         function renderCart() {
             const c = document.getElementById('cartItems');
             const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
@@ -255,28 +212,21 @@
             `).join('') : '<p class="text-center text-gray-400">Carrito vacío</p>';
             document.getElementById('cartTotal').textContent = `${total}€`;
         }
-
         function updateQty(id, chg) {
             const i = cart.find(x => x.id === id);
             if (i) { i.quantity += chg; if (i.quantity <= 0) cart = cart.filter(x => x.id !== id); updateCart(); }
         }
-
         function filterProducts(cat) {
             document.querySelectorAll('.category-btn').forEach(b => b.classList.toggle('active', b.dataset.category === cat));
             renderProducts(cat === 'Todos' ? products : products.filter(p => p.category === cat));
         }
-
         function toggleCart() { document.getElementById('cartModal').classList.toggle('hidden'); }
-
         function sendWhatsAppOrder() {
-            if (!cart.length) return;
             const msg = cart.map(i => `• ${i.name} (x${i.quantity})`).join('%0A');
             const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
             window.open(`https://wa.me/34653045144?text=Hola! Me gustaría encargar:%0A${msg}%0A%0ATotal: ${total}€`);
         }
-
-        renderProducts(products);
-        updateCart();
+        renderProducts(products); updateCart();
     </script>
 </body>
 </html>
