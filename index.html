@@ -22,171 +22,230 @@
         }
     </script>
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #ECE4DB; }
+        body { font-family: 'Poppins', sans-serif; background-color: #ECE4DB; scroll-behavior: smooth; overflow-x: hidden; }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
         
-        .product-card { transition: all 0.3s ease; background: white; animation: slideIn 0.5s ease-out; }
-        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        /* --- MEJORAS VISUALES Y ANIMACIONES --- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .fade-up.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); background: white; cursor: pointer; }
+        .product-card:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12); 
+        }
+
+        nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+        #productModal.flex .bg-white { animation: zoomIn 0.35s ease; }
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        img { transition: transform 0.7s ease, opacity 0.3s ease; }
 
         .whatsapp-float {
-            position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px;
+            position: fixed; width: 65px; height: 65px; bottom: 30px; right: 30px;
             background-color: #BAB8A2; color: #FFF; border-radius: 50px;
-            text-align: center; font-size: 30px; box-shadow: 2px 2px 15px rgba(0,0,0,0.1);
+            text-align: center; font-size: 35px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             z-index: 100; display: flex; align-items: center; justify-content: center;
             transition: all 0.3s; cursor: pointer;
         }
-        .whatsapp-float:hover { background-color: #C4A69B; transform: scale(1.1); }
+        .whatsapp-float:hover { background-color: #C4A69B; transform: scale(1.1) rotate(5deg); }
 
         .cart-badge {
             position: absolute; top: -8px; right: -8px; background: #C4A69B;
-            color: white; border-radius: 50%; width: 22px; height: 22px;
-            display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;
+            color: white; border-radius: 50%; width: 24px; height: 24px;
+            display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;
         }
 
-        .category-btn { transition: all 0.3s; background: white; border: 1px solid #ECE4DB; }
-        .category-btn.active { background: #C4A69B; color: white; border-color: #C4A69B; }
-
-        .hero { background: linear-gradient(135deg, #B8AB9C 0%, #ECE4DB 100%); }
-
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .category-btn { transition: all 0.3s ease; background: white; color: #6B7280; border: 1px solid #E5E7EB; }
+        .category-btn.active { background: #C4A69B; color: white; border-color: #C4A69B; transform: scale(1.05); }
     </style>
 </head>
 <body class="text-gray-800">
 
-    <nav class="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-24">
-                <div class="flex items-center">
-                    <img src="logo.jpeg" alt="Zory Crochet Logo" class="h-16 w-auto object-contain">
-                </div>
-                
-                <div class="hidden md:flex space-x-8">
-                    <a href="#productos" class="text-gray-600 hover:text-rosewood transition font-medium">Productos</a>
-                    <a href="#nosotros" class="text-gray-600 hover:text-rosewood transition font-medium">Nosotros</a>
-                    <a href="#contacto" class="text-gray-600 hover:text-rosewood transition font-medium">Contacto</a>
-                </div>
-
-                <button onclick="toggleCart()" class="relative p-3 bg-porcelain rounded-full hover:bg-parchment transition">
-                    <svg class="w-6 h-6 text-rosewood" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
-                    <span id="cartCount" class="cart-badge">0</span>
-                </button>
+    <nav class="bg-white/80 shadow-sm sticky top-0 z-[80] transition-all">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="logo.jpeg" alt="Zory Crochet" class="h-16 w-auto">
             </div>
+            <div class="hidden md:flex space-x-10 text-sm tracking-widest uppercase font-medium">
+                <a href="#productos" class="hover:text-rosewood transition">Productos</a>
+                <a href="#nosotros" class="hover:text-rosewood transition">Nosotros</a>
+                <a href="#contacto" class="hover:text-rosewood transition">Contacto</a>
+            </div>
+            <button id="cartBtn" onclick="toggleCart()" class="relative p-3 bg-porcelain rounded-full hover:bg-parchment transition duration-300">
+                <svg class="w-6 h-6 text-rosewood" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                <span id="cartCount" class="cart-badge">0</span>
+            </button>
         </div>
     </nav>
 
-    <section class="hero py-20 px-4 text-center">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-5xl md:text-6xl font-bold text-gray-800 mb-6">Tejidos con Amor</h2>
-            <p class="text-xl text-gray-700 mb-8">Piezas únicas hechas a mano que cuentan una historia en cada puntada.</p>
-            <a href="#productos" class="inline-block bg-rosewood text-white px-8 py-4 rounded-full font-semibold hover:bg-stone transition shadow-lg">Ver Catálogo</a>
-        </div>
-    </section>
-
-    <section id="productos" class="py-16 px-4">
+    <section id="productos" class="py-20 px-6">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-12">Nuestra Colección</h2>
-
-            <div class="flex flex-wrap justify-center gap-3 mb-12">
-                <button onclick="filterCategory('todos')" class="category-btn active px-6 py-2 rounded-full shadow-sm text-gray-700 font-medium">Todos</button>
-                <button onclick="filterCategory('vestidos')" class="category-btn px-6 py-2 rounded-full shadow-sm text-gray-700 font-medium">Vestidos</button>
-                <button onclick="filterCategory('accesorios')" class="category-btn px-6 py-2 rounded-full shadow-sm text-gray-700 font-medium">Cabello</button>
-                <button onclick="filterCategory('niños')" class="category-btn px-6 py-2 rounded-full shadow-sm text-gray-700 font-medium">Niños</button>
-                <button onclick="filterCategory('hogar')" class="category-btn px-6 py-2 rounded-full shadow-sm text-gray-700 font-medium">Hogar</button>
-            </div>
-
-            <div id="productGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
-        </div>
-    </section>
-
-    <section id="nosotros" class="bg-white py-20 px-4">
-        <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <img src="logo.jpeg" alt="Sobre Nosotros" class="rounded-2xl border border-porcelain">
-            <div>
-                <h2 class="text-4xl font-bold mb-6 text-stone">Sobre Nosotros</h2>
-                <p class="text-lg text-gray-600">En <strong>Zory's Creaciones</strong>, transformamos hilos en arte. Cada vestido, gorrito y accesorio es tejido a mano en España, buscando siempre la máxima suavidad para los bebés y elegancia para tu hogar.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="contacto" class="py-16 px-4 bg-parchment/30 text-center">
-        <div class="max-w-2xl mx-auto">
-            <h2 class="text-4xl font-bold mb-8">¿Tienes un pedido especial?</h2>
-            <p class="mb-8 text-gray-600">Escríbenos y personalizamos tu prenda favorita.</p>
-            <a href="https://wa.me/34653045144" class="inline-block bg-olive text-white px-10 py-4 rounded-full font-semibold hover:bg-stone transition">Hablar por WhatsApp</a>
-        </div>
-    </section>
-
-    <footer class="bg-stone text-white py-8 text-center">
-        <p>© 2025 Zory's Creaciones. Handmade in Spain 💜</p>
-    </footer>
-
-    <a href="https://wa.me/34653045144" target="_blank" class="whatsapp-float"><span>💬</span></a>
-
-    <div id="cartModal" class="fixed inset-0 bg-black/40 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
-            <div class="p-6 border-b flex justify-between items-center">
-                <h3 class="text-2xl font-bold">Tu Carrito</h3>
-                <button onclick="toggleCart()" class="text-gray-400 text-3xl">&times;</button>
-            </div>
-            <div id="cartItems" class="flex-grow overflow-y-auto p-6"></div>
-            <div class="border-t p-6 bg-porcelain/20">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-xl font-semibold">Total:</span>
-                    <span id="cartTotal" class="text-2xl font-bold text-rosewood">$0</span>
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-5xl font-bold text-gray-900 mb-4">Nuestra Colección</h2>
+                <div class="h-1 w-20 bg-rosewood mx-auto mb-8"></div>
+                
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="filterProducts('Todos')" class="category-btn active px-7 py-2.5 rounded-full font-semibold shadow-sm" data-category="Todos">Todos</button>
+                    <button onclick="filterProducts('Vestidos')" class="category-btn px-7 py-2.5 rounded-full font-semibold shadow-sm" data-category="Vestidos">Vestidos</button>
+                    <button onclick="filterProducts('Cabello')" class="category-btn px-7 py-2.5 rounded-full font-semibold shadow-sm" data-category="Cabello">Cabello</button>
+                    <button onclick="filterProducts('Niños')" class="category-btn px-7 py-2.5 rounded-full font-semibold shadow-sm" data-category="Niños">Niños</button>
                 </div>
-                <button onclick="sendWhatsAppOrder()" class="w-full bg-rosewood text-white py-3 rounded-lg font-semibold hover:bg-stone transition">Confirmar Pedido</button>
+            </div>
+
+            <div id="productGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+                </div>
+        </div>
+    </section>
+
+    <section id="nosotros" class="py-20 px-6 bg-white fade-up">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-6">Hecho a mano con calma</h2>
+            <p class="text-xl text-gray-600 leading-relaxed">En Zory's Creaciones, cada puntada cuenta una historia. Utilizamos materiales naturales para cuidar la piel de los más pequeños.</p>
+        </div>
+    </section>
+
+    <div id="productModal" onclick="if(event.target == this) closeProductModal()" class="fixed inset-0 bg-black/80 hidden z-[100] items-center justify-center p-4 backdrop-blur-md">
+        <div class="bg-white rounded-[2rem] max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col md:flex-row shadow-2xl">
+            <div class="md:w-1/2 bg-porcelain h-80 md:h-auto overflow-hidden">
+                <img id="modalImg" src="" class="w-full h-full object-cover">
+            </div>
+            <div class="md:w-1/2 p-10 flex flex-col relative bg-white">
+                <button onclick="closeProductModal()" class="absolute top-6 right-6 text-gray-300 hover:text-rosewood text-4xl transition">&times;</button>
+                <div class="mt-2 flex-grow">
+                    <span id="modalCat" class="text-[10px] font-black text-rosewood uppercase tracking-widest"></span>
+                    <h3 id="modalTitle" class="text-4xl font-bold mt-2 mb-4 text-gray-900 leading-tight"></h3>
+                    <p id="modalPrice" class="text-3xl font-bold text-stone mb-8"></p>
+                    <div class="space-y-4 border-t border-gray-100 pt-6">
+                        <h4 class="font-bold text-gray-800 uppercase text-sm tracking-widest">Detalles:</h4>
+                        <p id="modalDesc" class="text-gray-600 text-lg leading-relaxed"></p>
+                    </div>
+                </div>
+                <button id="modalAddBtn" class="w-full bg-rosewood text-white py-5 rounded-2xl font-bold text-xl hover:bg-stone transition-all shadow-lg mt-10 transform active:scale-95">
+                    Añadir al Carrito
+                </button>
             </div>
         </div>
     </div>
 
+    <div id="cartModal" class="fixed inset-0 bg-black/50 hidden z-[90] flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-xl w-full max-h-[80vh] flex flex-col shadow-2xl">
+            <div class="p-8 border-b flex justify-between items-center">
+                <h3 class="text-2xl font-bold">Tu Selección</h3>
+                <button onclick="toggleCart()" class="text-gray-400 text-3xl">&times;</button>
+            </div>
+            <div id="cartItems" class="flex-grow overflow-y-auto p-8"></div>
+            <div class="p-8 bg-gray-50 rounded-b-3xl">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-lg font-medium">Total estimado:</span>
+                    <span id="cartTotal" class="text-3xl font-bold text-rosewood">0€</span>
+                </div>
+                <button onclick="sendWhatsAppOrder()" class="w-full bg-stone text-white py-4 rounded-xl font-bold hover:bg-rosewood transition shadow-md">Confirmar por WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/34653045144" target="_blank" class="whatsapp-float"><span>💬</span></a>
+
     <script>
         const products = [
-            { id: 1, name: "Vestido Artesanal Blanco", category: "vestidos", price: 3500, image: "vestidos.jpeg" },
-            { id: 2, name: "Vestido de Gala Tejido", category: "vestidos", price: 3800, image: "vestidos (2).jpeg" },
-            { id: 3, name: "Conjunto Vestido Primavera", category: "vestidos", price: 3500, image: "vestidos (3).jpeg" },
-            { id: 4, name: "Vestido Elegante Rosa", category: "vestidos", price: 4000, image: "vestidos (4).jpeg" },
-            { id: 5, name: "Vestido Clásico Zory", category: "vestidos", price: 3500, image: "vestidos (5).jpeg" },
-            { id: 6, name: "Vestido Detalle Floral", category: "vestidos", price: 3700, image: "vestidos (6).jpeg" },
-            { id: 7, name: "Gorrito para Niños", category: "niños", price: 1500, image: "para niños-gorritos.jpeg" },
-            { id: 8, name: "Set de Collets (Coleteros)", category: "accesorios", price: 800, image: "collets-para el cabello.jpeg" },
-            { id: 9, name: "Coleteros Artesanales Duo", category: "accesorios", price: 800, image: "collets-para el cabello (2).jpeg" },
-            { id: 10, name: "Decoración para el Hogar", category: "hogar", price: 2500, image: "para el hogar.jpeg" }
+            { id: 1, name: "Vestido Artesanal Flower", price: 45, image: "vestidos.jpeg", category: "Vestidos", info: "Un diseño vibrante con detalles de girasoles tejidos a mano. Este pack premium incluye el vestido, un gorrito artesanal y zapatitos a juego." },
+            { id: 2, name: "Vestido de Gala Tejido", price: 50, image: "vestidos (2).jpeg", category: "Vestidos", info: "Elegancia pura para momentos especiales. Tejido en color rosa empolvado con acabados en blanco." },
+            { id: 3, name: "Vestido Primavera Soft", price: 42, image: "vestidos (3).jpeg", category: "Vestidos", info: "Ligero y cómodo para el día a día. Color blanco hueso con detalles calados." },
+            { id: 4, name: "Vestido Libélula Baby", price: 38, image: "vestidos (4).jpeg", category: "Vestidos", info: "Inspirado en la naturaleza. Color verde menta con aplicaciones tejidas de flores." },
+            { id: 8, name: "Dúo Coleteros Algodón", price: 10, image: "collets-para el cabello.jpeg", category: "Cabello", info: "Dos coleteros hechos a mano. No dañan el cabello y son lavables." }
         ];
 
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let currentCategory = 'todos';
 
-        function renderProducts() {
+        function renderProducts(list) {
             const grid = document.getElementById('productGrid');
-            const filtered = currentCategory === 'todos' ? products : products.filter(p => p.category === currentCategory);
-            grid.innerHTML = filtered.map(product => `
-                <div class="product-card rounded-2xl overflow-hidden border border-porcelain">
-                    <div class="h-80 bg-porcelain">
-                        <img src="${product.image}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x500?text=Cargando+Imagen...'">
+            grid.innerHTML = list.map(p => `
+                <div class="product-card fade-up rounded-[2rem] overflow-hidden border border-gray-100" onclick="openProductModal(${p.id})">
+                    <div class="h-96 bg-porcelain overflow-hidden">
+                        <img src="${p.image}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">${product.name}</h3>
-                        <p class="text-2xl font-bold text-rosewood mb-4">$${product.price}</p>
-                        <button onclick="addToCart(${product.id})" class="w-full bg-rosewood text-white py-3 rounded-lg font-semibold hover:bg-stone transition">Agregar al Carrito</button>
+                    <div class="p-8">
+                        <span class="text-[10px] font-black text-rosewood uppercase tracking-widest">${p.category}</span>
+                        <h3 class="text-xl font-bold mt-2 text-gray-800">${p.name}</h3>
+                        <p class="text-2xl font-black text-stone mt-4">${p.price}€</p>
                     </div>
                 </div>
             `).join('');
+            
+            // Reiniciar el observer para los nuevos elementos
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         }
 
-        function filterCategory(cat) {
-            currentCategory = cat;
-            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            renderProducts();
+        // --- ANIMACIÓN SCROLL OBSERVER ---
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // --- ANIMACIÓN CARRITO ---
+        function animateCart() {
+            const btn = document.getElementById('cartBtn');
+            if (!btn) return;
+            btn.classList.add('scale-110');
+            setTimeout(() => btn.classList.remove('scale-110'), 200);
+        }
+
+        function openProductModal(id) {
+            const p = products.find(x => x.id === id);
+            if (!p) return;
+
+            // EFECTO PRO EN IMAGEN
+            const mainImg = document.getElementById('modalImg');
+            mainImg.style.opacity = 0;
+            
+            setTimeout(() => {
+                mainImg.src = p.image;
+                mainImg.style.opacity = 1;
+            }, 150);
+
+            document.getElementById('modalTitle').textContent = p.name;
+            document.getElementById('modalPrice').textContent = p.price + "€";
+            document.getElementById('modalDesc').textContent = p.info;
+            document.getElementById('modalCat').textContent = p.category;
+            
+            document.getElementById('modalAddBtn').onclick = () => { addToCart(p.id); closeProductModal(); };
+            
+            const m = document.getElementById('productModal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.replace('flex', 'hidden');
+            document.body.style.overflow = 'auto';
         }
 
         function addToCart(id) {
             const p = products.find(x => x.id === id);
-            const i = cart.find(x => x.id === id);
-            if (i) i.quantity++; else cart.push({...p, quantity: 1});
+            const item = cart.find(x => x.id === id);
+            if (item) item.quantity++; else cart.push({...p, quantity: 1});
+            
             updateCart();
+            animateCart();
+            // Opcional: podrías añadir un toast aquí si tienes la librería
         }
 
         function updateCart() {
@@ -199,16 +258,19 @@
             const c = document.getElementById('cartItems');
             const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
             c.innerHTML = cart.length ? cart.map(i => `
-                <div class="flex items-center gap-4 mb-4 pb-4 border-b border-porcelain">
-                    <div class="flex-grow"><h4 class="font-semibold">${i.name}</h4><p class="text-rosewood font-bold">$${i.price}</p></div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="updateQty(${i.id},-1)" class="w-8 h-8 bg-porcelain rounded-full">-</button>
-                        <span class="font-bold">${i.quantity}</span>
-                        <button onclick="updateQty(${i.id},1)" class="w-8 h-8 bg-porcelain rounded-full">+</button>
+                <div class="flex items-center gap-6 mb-6 pb-6 border-b border-gray-50">
+                    <div class="flex-grow">
+                        <h4 class="font-bold text-gray-800">${i.name}</h4>
+                        <p class="text-rosewood font-bold">${i.price}€</p>
+                    </div>
+                    <div class="flex items-center gap-3 bg-porcelain rounded-full px-4 py-2">
+                        <button onclick="updateQty(${i.id},-1)" class="font-bold text-stone">-</button>
+                        <span class="font-bold w-4 text-center">${i.quantity}</span>
+                        <button onclick="updateQty(${i.id},1)" class="font-bold text-stone">+</button>
                     </div>
                 </div>
             `).join('') : '<p class="text-center text-gray-400">Carrito vacío</p>';
-            document.getElementById('cartTotal').textContent = `$${total}`;
+            document.getElementById('cartTotal').textContent = `${total}€`;
         }
 
         function updateQty(id, chg) {
@@ -218,14 +280,22 @@
 
         function toggleCart() { document.getElementById('cartModal').classList.toggle('hidden'); }
 
+        function filterProducts(cat) {
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.toggle('active', b.dataset.category === cat));
+            renderProducts(cat === 'Todos' ? products : products.filter(p => p.category === cat));
+        }
+
         function sendWhatsAppOrder() {
             if (!cart.length) return;
             const msg = cart.map(i => `• ${i.name} (x${i.quantity})`).join('%0A');
             const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
-            window.open(`https://wa.me/34653045144?text=Hola! Me gustaría encargar:%0A${msg}%0A%0ATotal: $${total}`);
+            window.open(`https://wa.me/34653045144?text=Hola! Me gustaría encargar:%0A${msg}%0A%0ATotal: ${total}€`);
         }
 
-        renderProducts();
+        // Inicializar animaciones scroll para elementos estáticos
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        renderProducts(products);
         updateCart();
     </script>
 </body>
