@@ -57,7 +57,12 @@
 
     <nav class="bg-white/80 shadow-sm sticky top-0 z-[80]">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <img src="logoZ.png" alt="Zory Crochet" class="h-14 w-auto">
+            <button
+                id="brandButton"
+                onclick="openBrandPanel()"
+                class="transition duration-300 hover:scale-105 active:scale-95 focus:outline-none">
+                    <img src="logoZ.png" alt="Zory Crochet" class="h-14 w-auto select-none">
+            </button>
             <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest font-medium">
                 <a href="#productos" class="hover:text-rosewood transition">Colección</a>
                 <a href="#nosotros" class="hover:text-rosewood transition">Nosotros</a>
@@ -133,6 +138,119 @@
 
     <a href="https://wa.me/34653045144" target="_blank" class="whatsapp-float">💬</a>
 
+    <!-- ==========================
+     BRAND PANEL
+========================== -->
+
+<div id="brandOverlay"
+     class="fixed inset-0 bg-black/30 backdrop-blur-md opacity-0 invisible transition-all duration-500 z-[120]">
+
+    <div id="brandPanel"
+         class="absolute top-24 right-6 w-[380px] max-w-[90vw]
+                bg-white/90 backdrop-blur-xl
+                rounded-[32px]
+                shadow-[0_30px_80px_rgba(0,0,0,0.12)]
+                p-8
+                scale-95 opacity-0
+                transition-all duration-500">
+
+        <!-- Cerrar -->
+
+        <button
+            onclick="closeBrandPanel()"
+            class="absolute top-5 right-6 text-3xl text-gray-300 hover:text-rosewood transition">
+
+            &times;
+
+        </button>
+
+        <!-- Logo -->
+
+        <div class="flex justify-center mb-6">
+
+            <img
+                src="logoZ.png"
+                class="w-40 h-auto">
+
+        </div>
+
+        <!-- Introducción -->
+
+        <p class="text-center text-gray-500 leading-relaxed mb-8">
+
+            Cada puntada cuenta una historia.
+
+        </p>
+
+        <!-- Redes -->
+
+        <h3 class="uppercase tracking-[4px] text-xs text-stone text-center mb-5">
+
+            Síguenos
+
+        </h3>
+
+        <div class="flex flex-col gap-4">
+
+            <a href="#"
+               class="hover:text-rosewood transition">
+
+                Instagram
+
+            </a>
+
+            <a href="#"
+               class="hover:text-rosewood transition">
+
+                Facebook
+
+            </a>
+
+            <a href="#"
+               class="hover:text-rosewood transition">
+
+                TikTok
+
+            </a>
+
+            <a href="#"
+               class="hover:text-rosewood transition">
+
+                Pinterest
+
+            </a>
+
+            <a href="#"
+               class="hover:text-rosewood transition">
+
+                WhatsApp
+
+            </a>
+
+        </div>
+
+        <div class="my-8 h-px bg-gray-200"></div>
+
+        <!-- Menú -->
+
+        <h3 class="uppercase tracking-[4px] text-xs text-stone text-center mb-5">
+            Explorar
+        </h3>
+        <div class="flex flex-col gap-4">
+            <a href="#productos"
+               onclick="closeBrandPanel()"
+               class="hover:text-rosewood transition">
+                Colección
+            </a>
+            <a href="#nosotros"
+               onclick="closeBrandPanel()"
+               class="hover:text-rosewood transition">
+                Nosotros
+            </a>
+        </div>
+    </div>
+</div>
+    
     <script>
         const products = [
             { id: 1, name: "Vestido Artesanal Flower", price: 35, image: "vestidos.jpeg", category: "Vestidos", info: "Diseño vibrante con girasoles tejidos a mano. Pack incluye vestido, gorrito y zapatitos." },
@@ -228,7 +346,35 @@
             const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
             window.open(`https://wa.me/34653045144?text=Hola! Me gustaría encargar:%0A${msg}%0A%0ATotal: ${total}€`);
         }
-        renderProducts(products); updateCart();
+        /* ==========================================
+   PANEL PREMIUM ZORYCROCHET
+========================================== */
+function openBrandPanel() {
+    const overlay = document.getElementById("brandOverlay");
+    const panel = document.getElementById("brandPanel");
+    overlay.classList.remove("opacity-0", "invisible");
+    setTimeout(() => {
+        panel.classList.remove("opacity-0", "scale-95");
+    }, 20);
+    document.body.style.overflow = "hidden";
+}
+function closeBrandPanel() {
+    const overlay = document.getElementById("brandOverlay");
+    const panel = document.getElementById("brandPanel");
+    panel.classList.add("opacity-0", "scale-95");
+    setTimeout(() => {
+        overlay.classList.add("opacity-0", "invisible");
+    }, 250);
+    document.body.style.overflow = "auto";
+}
+/* Cerrar haciendo clic fuera */
+document.getElementById("brandOverlay").addEventListener("click", function(e){
+    if(e.target === this){
+        closeBrandPanel();
+    }
+});
+        renderProducts(products); 
+        updateCart();
     </script>
 </body>
 </html>
