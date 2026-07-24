@@ -51,6 +51,48 @@
         @media (max-width: 768px) {
             #modalImg { object-fit: contain; background-color: #f9f9f9; }
         }
+/*==========================
+  BRAND PANEL
+==========================*/
+
+.brand-panel{
+
+    position:absolute;
+
+    top:95px;
+
+    right:40px;
+
+    width:430px;
+
+    max-width:92vw;
+
+    background:rgba(255,255,255,.93);
+
+    backdrop-filter:blur(25px);
+
+    border-radius:36px;
+
+    padding:42px;
+
+    box-shadow:0 35px 100px rgba(0,0,0,.15);
+
+    transform:scale(.96);
+
+    opacity:0;
+
+    transition:.45s;
+
+}
+
+.brand-open{
+
+    transform:scale(1);
+
+    opacity:1;
+
+}
+        
     </style>
 </head>
 <body class="text-gray-800">
@@ -145,8 +187,7 @@
 <div id="brandOverlay"
      class="fixed inset-0 bg-black/30 backdrop-blur-md opacity-0 invisible transition-all duration-500 z-[120]">
 
-    <div id="brandPanel"
-      class="absolute top-20 right-10 w-[430px] max-w-[92vw]
+    <<div id="brandPanel" class="brand-panel">
                 bg-white/90 backdrop-blur-xl
                 rounded-[36px]
                 shadow-[0_30px_80px_rgba(0,0,0,0.12)]
@@ -357,14 +398,14 @@ function openBrandPanel() {
     const panel = document.getElementById("brandPanel");
     overlay.classList.remove("opacity-0", "invisible");
     setTimeout(() => {
-        panel.classList.remove("opacity-0", "scale-95");
+        panel.classList.add("brand-open");
     }, 20);
     document.body.style.overflow = "hidden";
 }
 function closeBrandPanel() {
     const overlay = document.getElementById("brandOverlay");
     const panel = document.getElementById("brandPanel");
-    panel.classList.add("opacity-0", "scale-95");
+    panel.classList.remove("brand-open");
     setTimeout(() => {
         overlay.classList.add("opacity-0", "invisible");
     }, 250);
