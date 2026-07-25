@@ -25,8 +25,15 @@
         body { font-family: 'Poppins', sans-serif; background-color: #ECE4DB; scroll-behavior: smooth; overflow-x: hidden; }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
         
-        .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
-        .fade-up.show { opacity: 1; transform: translateY(0); }
+.fade-up { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+.fade-up.show { opacity: 1; transform: translateY(0); }
+.fade-left { opacity: 0; transform: translateX(-40px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+.fade-left.show { opacity: 1; transform: translateX(0); }
+.fade-right { opacity: 0; transform: translateX(40px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+.fade-right.show { opacity: 1; transform: translateX(0); }
+
+.zoom-in { opacity: 0; transform: scale(0.92); transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+.zoom-in.show { opacity: 1; transform: scale(1); }
 
         .product-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); background: white; cursor: pointer; }
         .product-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 30px 60px rgba(0,0,0,0.12); }
@@ -198,12 +205,12 @@
         </div>
 
         <div class="grid md:grid-cols-2 gap-14 items-center mb-20">
-            <div class="fade-up">
+            <div class="fade-left">
                 <div class="rounded-[2rem] overflow-hidden shadow-xl">
                     <img src="vestidos.jpeg" alt="Creación artesanal de Zorycrochet" class="w-full h-96 object-cover">
                 </div>
             </div>
-            <div class="fade-up">
+            <div class="fade-right">
                 <p class="text-gray-600 text-lg leading-relaxed mb-6">
                     Zorycrochet nació de una aguja, un poco de hilo y muchas ganas de crear algo
                     con las manos. Cada pieza que ves aquí empezó siendo apenas un ovillo, y se
@@ -218,7 +225,7 @@
             </div>
         </div>
 
-        <div class="bg-porcelain rounded-[2rem] p-10 md:p-14 text-center fade-up">
+        <div class="bg-porcelain rounded-[2rem] p-10 md:p-14 text-center zoom-in">
             <span class="text-3xl">🧵</span>
             <p class="text-xl md:text-2xl font-semibold text-gray-800 mt-4 mb-4" style="font-family:'Playfair Display',serif;">
                 En honor a María de los Santos Calatayud Cabrera
@@ -379,23 +386,32 @@
 
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('show'); });
-        }, { threshold: 0.1 });
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+
+function observeAll() {
+    document.querySelectorAll('.fade-up, .fade-left, .fade-right, .zoom-in').forEach(el => observer.observe(el));
+}
 
         function renderProducts(list) {
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = list.map(p => `
-                <div class="product-card fade-up rounded-[2rem] overflow-hidden border border-gray-100" onclick="openProductModal(${p.id})">
-                    <div class="h-80 bg-porcelain overflow-hidden"><img src="${p.image}" class="w-full h-full object-cover"></div>
-                    <div class="p-6">
-                        <span class="text-[10px] font-black text-rosewood uppercase">${p.category}</span>
-                        <h3 class="text-lg font-bold mt-1 text-gray-800">${p.name}</h3>
-                        <p class="text-xl font-black text-stone mt-2">${p.price}€</p>
-                    </div>
-                </div>
-            `).join('');
-            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-        }
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = list.map((p, i) => `
+        <div class="product-card fade-up rounded-[2rem] overflow-hidden border border-gray-100" style="transition-delay: ${i * 60}ms" onclick="openProductModal(${p.id})">
+            <div class="h-80 bg-porcelain overflow-hidden"><img src="${p.image}" class="w-full h-full object-cover"></div>
+            <div class="p-6">
+                <span class="text-[10px] font-black text-rosewood uppercase">${p.category}</span>
+                <h3 class="text-lg font-bold mt-1 text-gray-800">${p.name}</h3>
+                <p class="text-xl font-black text-stone mt-2">${p.price}€</p>
+            </div>
+        </div>
+    `).join('');
+    observeAll();
+}
 
         function openProductModal(id) {
             const p = products.find(x => x.id === id);
