@@ -123,6 +123,16 @@
     .brand-panel{ padding: 48px 24px 32px; border-radius: 24px; }
     .brand-logo{ width: 120px; }
 }
+
+@keyframes logoPulse {
+    0%   { transform: scale(1) rotate(0deg); }
+    40%  { transform: scale(1.15) rotate(-6deg); }
+    70%  { transform: scale(1.05) rotate(3deg); }
+    100% { transform: scale(1.08) rotate(0deg); } /* queda igual que .logo-active */
+}
+.logo-pulse{
+    animation: logoPulse .5s cubic-bezier(.22,1,.36,1) forwards;
+}
     </style>
 </head>
 <body class="text-gray-800">
@@ -148,6 +158,19 @@
         </div>
     </nav>
 
+    <section class="relative w-full h-[45vh] md:h-[60vh] overflow-hidden bg-porcelain">
+    <div id="carouselTrack" class="flex h-full transition-transform duration-700 ease-out">
+        <!-- los slides se generan por JS -->
+    </div>
+
+    <!-- Flechas -->
+    <button onclick="carouselMove(-1)" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center text-xl transition z-10" aria-label="Anterior">‹</button>
+    <button onclick="carouselMove(1)" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/80 hover:bg-white shadow-lg flex items-center justify-center text-xl transition z-10" aria-label="Siguiente">›</button>
+
+    <!-- Puntos -->
+    <div id="carouselDots" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10"></div>
+</section>
+
     <section id="productos" class="py-16 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-12 fade-up">
@@ -165,6 +188,60 @@
             <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
         </div>
     </section>
+
+    <section id="nosotros" class="py-24 px-6 bg-white">
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-16 fade-up">
+            <span class="text-xs uppercase tracking-[4px] text-rosewood font-semibold">Nuestra historia</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-4">Hilo a hilo, con amor</h2>
+            <div class="h-1 w-16 bg-rosewood mx-auto"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-14 items-center mb-20">
+            <div class="fade-up">
+                <div class="rounded-[2rem] overflow-hidden shadow-xl">
+                    <img src="vestidos.jpeg" alt="Creación artesanal de Zorycrochet" class="w-full h-96 object-cover">
+                </div>
+            </div>
+            <div class="fade-up">
+                <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                    Zorycrochet nació de una aguja, un poco de hilo y muchas ganas de crear algo
+                    con las manos. Cada pieza que ves aquí empezó siendo apenas un ovillo, y se
+                    transformó puntada a puntada en algo único, pensado para acompañar momentos
+                    especiales.
+                </p>
+                <p class="text-gray-600 text-lg leading-relaxed">
+                    No hay dos piezas exactamente iguales. Cada una lleva tiempo, paciencia y
+                    cariño — porque creemos que la moda hecha a mano tiene un valor que no se
+                    puede replicar en serie.
+                </p>
+            </div>
+        </div>
+
+        <div class="bg-porcelain rounded-[2rem] p-10 md:p-14 text-center fade-up">
+            <span class="text-3xl">🧵</span>
+            <p class="text-xl md:text-2xl font-semibold text-gray-800 mt-4 mb-4" style="font-family:'Playfair Display',serif;">
+                En honor a María de los Santos Calatayud Cabrera
+            </p>
+            <p class="text-gray-500 max-w-xl mx-auto leading-relaxed mb-6">
+                Con paciencia y amor infinito, le enseñó a su bisnieta el arte de la costura
+                y el valor de crear con las propias manos. Su legado vive en cada puntada,
+                en cada creación, en cada enseñanza que dejó como herencia.
+            </p>
+
+            <button onclick="toggleHomenaje()" id="homenajeBtn" class="text-sm text-rosewood font-semibold uppercase tracking-wide hover:underline">
+                Leer homenaje completo
+            </button>
+
+            <div id="homenajeFull" class="hidden text-left max-w-2xl mx-auto mt-6 text-gray-600 leading-relaxed space-y-4">
+                <p>María de los Santos Calatayud Cabrera, una mujer de manos sabias y corazón inmenso, dejó un legado que permanecerá por siempre en la vida de su bisnieta.</p>
+                <p>Con paciencia, amor y dedicación, le enseñó el hermoso arte de la costura y el valor de crear maravillosas manualidades con sus propias manos. Cada puntada llevaba una enseñanza, cada creación guardaba un recuerdo y cada instante compartido se convirtió en un tesoro imposible de olvidar.</p>
+                <p>Su amor, su ejemplo y el tiempo que dedicó a transmitir sus conocimientos vivirán para siempre en el corazón de quienes tuvieron la fortuna de conocerla. Porque las personas que enseñan con amor nunca se van del todo; permanecen en cada recuerdo, en cada obra hecha con las manos y en cada enseñanza que dejaron como herencia.</p>
+                <p class="italic">Gracias por tu amor, tu paciencia y por el legado que dejaste. Tu recuerdo vivirá para siempre.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
     <div id="productModal" onclick="if(event.target == this) closeProductModal()" class="fixed inset-0 bg-black/90 hidden z-[100] items-center justify-center p-2 md:p-6 backdrop-blur-md">
         <div class="bg-white rounded-[2rem] max-w-5xl w-full max-h-[95vh] overflow-hidden flex flex-col md:flex-row shadow-2xl relative">
@@ -255,10 +332,16 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3v9.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M15 3c0 2.5 2 4.5 4.5 4.5"/></svg>
             </a>
             <a href="#" class="social-link" aria-label="Pinterest">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9.5 19c1-3 2-6.5 2-8.5a2.5 2.5 0 0 1 5 0c0 1.5-1 4-3 4"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                 <circle cx="12" cy="12" r="9"/>
+                 <path d="M9 17c1-4 1.8-7 1.8-9a2.2 2.2 0 1 1 4.4.3c0 1.5-1 3.7-1.5 5-.4 1 .3 1.9 1.3 1.9 1.8 0 3.2-1.9 3.2-4.6a5.2 5.2 0 0 0-5.5-5.2A5.6 5.6 0 0 0 6.9 10.4c0 1.1.4 2 1.2 2.7"/>
+                </svg>
             </a>
             <a href="#" class="social-link" aria-label="WhatsApp">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12a8 8 0 1 1-3.5-6.6"/><path d="M13 8.5c.3 1.5 1.5 2.7 3 3M4 20l1.3-3.5"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                 <path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z"/>
+                 <path d="M8.5 8.3c-.2.5-.3 1.1 0 2 .5 1.6 1.6 2.9 2.8 3.7.9.6 1.6.7 2.1.5.4-.1.8-.5 1-1l.2-.5-1.8-1-.4.6c-.1.1-.3.2-.5.1-.6-.3-1.5-1.1-1.9-1.9-.1-.2 0-.4.1-.5l.5-.4-.9-1.8-.5.1c-.2 0-.5.1-.7.4z"/>
+                </svg>
             </a>
         </div>
 
@@ -378,12 +461,17 @@ function openBrandPanel() {
     const panel = document.getElementById("brandPanel");
     const navLogo = document.querySelector("#brandButton img");
 
-    overlay.classList.remove("opacity-0", "invisible");
-    setTimeout(() => { panel.classList.add("brand-open"); }, 20);
-    navLogo.classList.add("logo-active");
-    document.body.style.overflow = "hidden";
-    document.addEventListener("keydown", handleBrandPanelKeydown);
-    panel.querySelector("button").focus();
+    navLogo.classList.add("logo-pulse");
+
+    setTimeout(() => {
+        overlay.classList.remove("opacity-0", "invisible");
+        setTimeout(() => { panel.classList.add("brand-open"); }, 20);
+        navLogo.classList.remove("logo-pulse");
+        navLogo.classList.add("logo-active");
+        document.body.style.overflow = "hidden";
+        document.addEventListener("keydown", handleBrandPanelKeydown);
+        panel.querySelector("button").focus();
+    }, 220); // el panel aparece justo cuando el logo termina su "salto"
 }
 
 function closeBrandPanel() {
@@ -409,6 +497,83 @@ document.getElementById("brandOverlay").addEventListener("click", function(e){
 });
         renderProducts(products); 
         updateCart();
+
+function toggleHomenaje() {
+    const full = document.getElementById('homenajeFull');
+    const btn = document.getElementById('homenajeBtn');
+    full.classList.toggle('hidden');
+    btn.textContent = full.classList.contains('hidden') ? 'Leer homenaje completo' : 'Ocultar';
+}
+
+const galleryImages = [
+    "vestidos.jpeg",
+    "vestidos (2).jpeg",
+    "niña.page.jpeg",
+    "vestidos (4).jpeg",
+    "vestidos (5).jpeg",
+    "para el hogar.jpeg",
+    "collar1.2.page.jpeg",
+    "collets-para el cabello.jpeg"
+];
+
+let carouselIndex = 0;
+let carouselTimer = null;
+
+function renderCarousel() {
+    const track = document.getElementById('carouselTrack');
+    const dots = document.getElementById('carouselDots');
+
+    track.innerHTML = galleryImages.map((img, i) => `
+        <div class="relative w-full h-full flex-shrink-0 cursor-pointer overflow-hidden" onclick="openGalleryModal(${i})">
+            <img src="${img}" class="absolute inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-60">
+            <img src="${img}" class="relative w-full h-full object-contain">
+        </div>
+    `).join('');
+
+    dots.innerHTML = galleryImages.map((_, i) => `
+        <button onclick="carouselGoTo(${i})" class="carousel-dot w-2.5 h-2.5 rounded-full ${i === 0 ? 'bg-white' : 'bg-white/50'} transition"></button>
+    `).join('');
+
+    startCarouselAutoplay();
+}
+
+function carouselGoTo(i) {
+    carouselIndex = i;
+    updateCarousel();
+    startCarouselAutoplay();
+}
+
+function carouselMove(dir) {
+    carouselIndex = (carouselIndex + dir + galleryImages.length) % galleryImages.length;
+    updateCarousel();
+    startCarouselAutoplay();
+}
+
+function updateCarousel() {
+    document.getElementById('carouselTrack').style.transform = `translateX(-${carouselIndex * 100}%)`;
+    document.querySelectorAll('.carousel-dot').forEach((d, i) => {
+        d.classList.toggle('bg-white', i === carouselIndex);
+        d.classList.toggle('bg-white/50', i !== carouselIndex);
+    });
+}
+
+function startCarouselAutoplay() {
+    clearInterval(carouselTimer);
+    carouselTimer = setInterval(() => carouselMove(1), 5000);
+}
+
+function openGalleryModal(i) {
+    document.getElementById('galleryModalImg').src = galleryImages[i];
+    const m = document.getElementById('galleryModal');
+    m.classList.remove('hidden'); m.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+}
+function closeGalleryModal() {
+    document.getElementById('galleryModal').classList.replace('flex', 'hidden');
+    document.body.style.overflow = 'auto';
+}
+
+renderCarousel();
     </script>
 </body>
 </html>
