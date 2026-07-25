@@ -68,6 +68,12 @@
     opacity:0;
     transition:.45s;
 }
+
+#brandOverlay{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
     </style>
 </head>
 <body class="text-gray-800">
@@ -156,9 +162,8 @@
     <!-- ==========================
      BRAND PANEL
 ========================== -->
-    <div id="brandOverlay"
-     class="fixed inset-0 bg-black/30 backdrop-blur-md opacity-0 invisible transition-all duration-500 z-[120]">
-    <div id="brandPanel" class="brand-panel">
+    <div id="brandOverlay" class="fixed inset-0 bg-black/30 backdrop-blur-md opacity-0 invisible transition-all duration-500 z-[120]"
+        <div id="brandPanel" class="brand-panel">
         
         <!-- Cerrar -->
         <button
