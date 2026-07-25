@@ -1,0 +1,21 @@
+{
+    "name": "Zorycrochet - Tejidos Artesanales",
+    "short_name": "Zorycrochet",
+    "description": "Creaciones artesanales de crochet hechas a mano en España",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ECE4DB",
+    "theme_color": "#C4A69B",
+    "icons": [
+        {
+            "src": "favicon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "favicon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
