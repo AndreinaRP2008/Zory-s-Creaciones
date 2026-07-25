@@ -45,8 +45,8 @@
             display: flex; align-items: center; justify-content: center; font-size: 30px;
             z-index: 100; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: 0.3s;
         }
+        
         .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); background-color: #C4A69B; }
-
         /* Corrección crítica para visualización en móvil */
         @media (max-width: 768px) {
             #modalImg { object-fit: contain; background-color: #f9f9f9; }
@@ -54,45 +54,20 @@
 /*==========================
   BRAND PANEL
 ==========================*/
-
 .brand-panel{
-
-    position:absolute;
-
-    top:95px;
-
-    right:40px;
-
     width:430px;
-
     max-width:92vw;
-
+    max-height: calc(100vh - 80px);   /* 👈 evita que se corte */
+    overflow-y: auto;                 /* 👈 scroll interno si no entra */
     background:rgba(255,255,255,.93);
-
     backdrop-filter:blur(25px);
-
     border-radius:36px;
-
     padding:42px;
-
     box-shadow:0 35px 100px rgba(0,0,0,.15);
-
     transform:scale(.96);
-
     opacity:0;
-
     transition:.45s;
-
 }
-
-.brand-open{
-
-    transform:scale(1);
-
-    opacity:1;
-
-}
-        
     </style>
 </head>
 <body class="text-gray-800">
@@ -132,7 +107,6 @@
                     <button onclick="filterProducts('Cabello')" class="category-btn px-6 py-2 rounded-full font-semibold text-sm" data-category="Cabello">Cabello</button>
                 </div>
             </div>
-
             <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
         </div>
     </section>
@@ -177,99 +151,66 @@
             </div>
         </div>
     </div>
-
     <a href="https://wa.me/34653045144" target="_blank" class="whatsapp-float">💬</a>
 
     <!-- ==========================
      BRAND PANEL
 ========================== -->
-
-<div id="brandOverlay"
+    <div id="brandOverlay"
      class="fixed inset-0 bg-black/30 backdrop-blur-md opacity-0 invisible transition-all duration-500 z-[120]">
-
-    <<div id="brandPanel" class="brand-panel">
+    <div id="brandPanel" class="brand-panel">
+        
         <!-- Cerrar -->
-
         <button
             onclick="closeBrandPanel()"
             class="absolute top-5 right-6 text-3xl text-gray-300 hover:text-rosewood transition">
-
             &times;
-
         </button>
 
         <!-- Logo -->
-
         <div class="flex justify-center mb-6">
-
             <img
                 src="logoZ.png"
                 class="w-52 h-auto">
-
         </div>
 
         <!-- Introducción -->
-
         <p class="text-center text-gray-500 leading-relaxed mb-8">
-
             Cada puntada cuenta una historia.<br>
             <span class="text-sm text-gray-400">
                 Creaciones artesanales hechas con amor desde España.
             </span>
-
         </p>
 
         <!-- Redes -->
-
         <h3 class="uppercase tracking-[4px] text-xs text-stone text-center mb-5">
-
             Síguenos
-
         </h3>
-
         <div class="flex flex-col items-center gap-4">
-
             <a href="#"
                class="hover:text-rosewood transition">
-
                 Instagram
-
             </a>
-
             <a href="#"
                class="hover:text-rosewood transition">
-
                 Facebook
-
             </a>
-
             <a href="#"
                class="hover:text-rosewood transition">
-
                 TikTok
-
             </a>
-
             <a href="#"
                class="hover:text-rosewood transition">
-
                 Pinterest
-
             </a>
-
             <a href="#"
                class="hover:text-rosewood transition">
-
                 WhatsApp
-
             </a>
-
         </div>
-
         <div class="my-8 w-24 h-px bg-[#DCCDB8] mx-auto"></div>
 
         <!-- Menú -->
-
         <h3 class="uppercase tracking-[4px] text-xs text-stone text-center mb-5">
             Explorar
         </h3>
