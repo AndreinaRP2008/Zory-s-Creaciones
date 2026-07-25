@@ -145,9 +145,18 @@
 .logo-pulse{
     animation: logoPulse .5s cubic-bezier(.22,1,.36,1) forwards;
 }
+
+#pageLoader.loader-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
     </style>
 </head>
 <body class="text-gray-800">
+
+    <div id="pageLoader" class="fixed inset-0 z-[200] bg-porcelain flex items-center justify-center transition-opacity duration-500">
+        <img src="logoZ.png" alt="Cargando" class="w-24 h-24 animate-pulse">
+    </div>
 
     <nav class="bg-white/80 shadow-sm sticky top-0 z-[80]">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
@@ -595,6 +604,14 @@ function closeGalleryModal() {
 }
 
 renderCarousel();
+
+window.addEventListener('load', () => {
+    const loader = document.getElementById('pageLoader');
+    setTimeout(() => {
+        loader.classList.add('loader-hidden');
+        setTimeout(() => loader.remove(), 500);
+    }, 200);
+});
     </script>
 </body>
 </html>
