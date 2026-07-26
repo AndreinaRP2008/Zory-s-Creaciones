@@ -204,6 +204,7 @@
                     <button onclick="filterProducts('Niños')" class="category-btn px-6 py-2 rounded-full font-semibold text-sm" data-category="Niños">Niños</button>
                     <button onclick="filterProducts('Hogar')" class="category-btn px-6 py-2 rounded-full font-semibold text-sm" data-category="Hogar">Hogar</button>
                     <button onclick="filterProducts('Cabello')" class="category-btn px-6 py-2 rounded-full font-semibold text-sm" data-category="Cabello">Cabello</button>
+                    <button onclick="filterProducts('Bebés')" class="category-btn px-6 py-2 rounded-full font-semibold text-sm" data-category="Bebés">Bebés</button>
                 </div>
             </div>
             <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
@@ -381,22 +382,40 @@
     
     <script>
         const products = [
-            { id: 1, name: "Vestido Artesanal Flower", price: 35, image: "4.png", category: "Vestidos", info: "Diseño vibrante con girasoles tejidos a mano. Pack incluye vestido, gorrito y zapatitos." },
-            { id: 2, name: "Vestido de Gala Tejido", price: 25, image: "211a40e7-3f36-4563-9542-0b96b627841d.jpg", category: "Vestidos", info: "Elegancia en rosa empolvado con acabados blancos. Perfecto para ceremonias." },
-            { id: 3, name: "Vestido Primavera Lavanda", price: 25, image: "niña.page.jpeg", category: "Vestidos", info: "Tono lavanda con flores en relieve y falda calada. Incluye diadema artesanal." },
-            { id: 4, name: "Vestido Sapito Baby", price: 35, image: "3.png", category: "Vestidos", info: "Color verde menta con aplicaciones tejidas de flores inspiradas en la naturaleza." },
-            { id: 5, name: "Vestido Abejita Sweet", price: 35, image: "21af74a3-f250-4971-9a18-ccf74267d134.jpg", category: "Vestidos", info: "Divertido diseño de abejita con gorrito decorado y detalles tejidos a mano." },
-            { id: 6, name: "vestido Rojo Floral", price: 25, image: "1.png", category: "vestidos", info: "Vestido rojo y elegante con gorrito y zapatitos, ideal para tu bebé."},
-            { id: 7, name: "Conjunto Marinero Tractor", price: 20, image: "niño.page.jpeg", category: "Niños", info: "Peto a rayas náuticas y gorrito con detalle de tractor artesanal." },
-            { id: 8, name: "Set Invierno Osito", price: 15, image: "para niños-gorritos.jpeg", category: "Niños", info: "Gorrito con orejitas y patucos a juego en azul cielo, ideal para bebés." },
-            { id: 9, name: "Guirnalda Floral Home", price: 30, image: "para el hogar.jpeg", category: "Hogar", info: "Decoración colgante con flores de colores pasteles para un toque natural." },
-            { id: 10, name: "Llavero Ladybug Charm", price: 10, image: "llavero.page.jpeg", category: "Hogar", info: "Accesorio detallado con mariquitas y flores tejidas. Ideal para mochilas." },
-            { id: 11, name: "Llavero Ocean Shells", price: 10, image: "llavero-caracol.page.jpeg", category: "Hogar", info: "Motivos marinos con conchas y estrellas de mar en tonos dorados." },
-            { id: 12, name: "Set Perlas Daisy", price: 25, image: "collar1.2.page.jpeg", category: "Hogar", info: "Collar y pulsera de perlas con delicado dije de margarita blanca." },
-            { id: 13, name: "Gargantilla Coquette Bow", price: 25, image: "collar-coquette.2.page.jpeg", category: "Hogar", info: "Cuentas violetas con lazo central. Tendencia coquette hecha a mano." },
-            { id: 14, name: "Scrunchie Perlas Brown", price: 8, image: "collets-para el cabello (2).jpeg", category: "Cabello", info: "Coletero chocolate decorado con perlas blancas brillantes." },
-            { id: 15, name: "Scrunchie Perlas golden", price: 8, image: "collets-para el cabello.jpeg", category: "Cabello", info: "Coletero rojo decorado con perlas doradas brillantes." },
-            { id: 16, name: "Vestido Anaranjado Conejito y Zanahoria", price: 30, image: "741226f0-c0c7-4f10-a2ae-041c899efea9.jpg", category: "Vestidos", info: "Divertido diseño en tonos naranja y amarillo con conejito y zanahoria tejidos a mano. Incluye gorrito, diadema y zapatitos a juego." }
+    { id: 1, name: "Vestido Artesanal Flower", price: 35, image: "4.png", category: "Vestidos", info: "Diseño vibrante con girasoles tejidos a mano. Pack incluye vestido, gorrito y zapatitos." },
+    { id: 2, name: "Vestido de Gala Tejido", price: 25, image: "211a40e7-3f36-4563-9542-0b96b627841d.jpg", category: "Vestidos", info: "Elegancia en rosa empolvado con acabados blancos. Perfecto para ceremonias." },
+    { id: 3, name: "Vestido Primavera Lavanda", price: 25, image: "18.jpg", category: "Vestidos", info: "Tono lavanda con flores en relieve y falda calada. Incluye diadema artesanal." },
+    { id: 4, name: "Vestido Sapito Baby", price: 35, image: "3.png", category: "Vestidos", info: "Color verde menta con aplicaciones tejidas de flores inspiradas en la naturaleza." },
+    { id: 5, name: "Vestido Abejita Sweet", price: 35, image: "21af74a3-f250-4971-9a18-ccf74267d134.jpg", category: "Vestidos", info: "Divertido diseño de abejita con gorrito decorado y detalles tejidos a mano." },
+    { id: 6, name: "Vestido Rojo Floral", price: 25, image: "1.png", category: "vestidos", info: "Vestido rojo y elegante con gorrito y zapatitos, ideal para tu bebé."},
+    { id: 7, name: "Conjunto Marinero Tractor", price: 20, image: "niño.page.jpeg", category: "Niños", info: "Peto a rayas náuticas y gorrito con detalle de tractor artesanal." },
+    { id: 8, name: "Set Invierno Osito", price: 15, image: "para niños-gorritos.jpeg", category: "Niños", info: "Gorrito con orejitas y patucos a juego en azul cielo, ideal para bebés." },
+    { id: 9, name: "Guirnalda Floral Home", price: 30, image: "para el hogar.jpeg", category: "Hogar", info: "Decoración colgante con flores de colores pasteles para un toque natural." },
+    { id: 10, name: "Llavero Ladybug Charm", price: 10, image: "llavero.page.jpeg", category: "Hogar", info: "Accesorio detallado con mariquitas y flores tejidas. Ideal para mochilas." },
+    { id: 11, name: "Llavero Ocean Shells", price: 10, image: "llavero-caracol.page.jpeg", category: "Hogar", info: "Motivos marinos con conchas y estrellas de mar en tonos dorados." },
+    { id: 12, name: "Set Perlas Daisy", price: 25, image: "collar1.2.page.jpeg", category: "Hogar", info: "Collar y pulsera de perlas con delicado dije de margarita blanca." },
+    { id: 13, name: "Gargantilla Coquette Bow", price: 25, image: "collar-coquette.2.page.jpeg", category: "Hogar", info: "Cuentas violetas con lazo central. Tendencia coquette hecha a mano." },
+    { id: 14, name: "Scrunchie Perlas Brown", price: 8, image: "collets-para el cabello (2).jpeg", category: "Cabello", info: "Coletero chocolate decorado con perlas blancas brillantes." },
+    { id: 15, name: "Scrunchie Perlas golden", price: 8, image: "collets-para el cabello.jpeg", category: "Cabello", info: "Coletero rojo decorado con perlas doradas brillantes." },
+    { id: 16, name: "Vestido Anaranjado Conejito y Zanahoria", price: 30, image: "741226f0-c0c7-4f10-a2ae-041c899efea9.jpg", category: "Vestidos", info: "Divertido diseño en tonos naranja y amarillo con conejito y zanahoria tejidos a mano. Incluye gorrito, diadema y zapatitos a juego." },
+    { id: 17, name: "Pulpitos Amigurumi Pareja", price: 20, image: "24.jpg", category: "Bebés", info: "Pareja de pulpitos tejidos a mano con detalles en azul y rosa. Ideal como regalo o decoración." },
+    { id: 18, name: "Conjunto Pelele Rojo Bebé", price: 22, image: "22.jpg", category: "Niños", info: "Pelele rojo y blanco con flor decorativa, incluye botines a juego." },
+    { id: 19, name: "Set Collar, Pulsera y Aretes Boho", price: 28, image: "20.jpg", category: "Hogar", info: "Conjunto de joyería artesanal con cuentas de colores, estilo boho." },
+    { id: 20, name: "Conjunto Playero Amarillo", price: 28, image: "17.jpg", category: "Vestidos", info: "Top, short, diadema y sandalias en amarillo con flores blancas tejidas." },
+    { id: 21, name: "Conjunto Morado", price: 32, image: "7.jpg", category: "Vestidos", info: "Vestido, gorrito y botines en morado y blanco con flores decorativas." },
+    { id: 22, name: "Set Diadema y Zapatitos Coral", price: 14, image: "8.jpg", category: "Cabello", info: "Diadema y zapatitos a juego en coral con flor rosa tejida." },
+    { id: 23, name: "Set Diadema y Zapatitos Fucsia", price: 14, image: "9.jpg", category: "Cabello", info: "Diadema y zapatitos a juego en fucsia con flor rosa tejida." },
+    { id: 24, name: "Collar de Lactancia Boho Marrón", price: 22, image: "10.png", category: "Hogar", info: "Collar de lactancia tejido en marrón con cuentas de madera, cómodo y seguro para tu bebé mientras lo cargas." },
+    { id: 25, name: "Sujeta-Toallas Gallina", price: 12, image: "11.jpg", category: "Hogar", info: "Sujeta-toallas con forma de gallina y anillo de madera, disponible en varios colores." },
+    { id: 26, name: "Set Gorro, Botines y Sonajera Osito", price: 18, image: "12.jpg", category: "Niños", info: "Gorrito y botines con carita de osito en tono café, incluye sonajera a juego." },
+    { id: 27, name: "Conjunto Amarillo Flores", price: 30, image: "13.jpg", category: "Vestidos", info: "Conjunto en amarillo y blanco con flores naranjas, incluye gorrito y botines." },
+    { id: 28, name: "Set Pañuelos Triangulares", price: 18, image: "15.jpg", category: "Cabello", info: "Set de pañuelos triangulares tejidos, disponibles en varios colores." },
+    { id: 29, name: "Lámpara Colgante de Flores LED", price: 45, image: "16.jpg", category: "Hogar", info: "Lámpara decorativa colgante con flores tejidas a mano y luces LED integradas." },
+    { id: 30, name: "Conjunto Beige Vestido y Diadema", price: 30, image: "conjuntobeige.jpg", category: "Vestidos", info: "Vestido, diadema y zapatitos en beige con flores a juego." },
+    { id: 31, name: "Sonajera Conejita Amigurumi", price: 22, image: "19.jpg", category: "Bebés", info: "Sonajera con forma de conejita vestida, tejida a mano con detalles en flores." },
+    { id: 32, name: "Porta Lentes Frida Kahlo", price: 20, image: "portalentesfridakahlo.jpg", category: "Hogar", info: "Porta lentes tejido con flores de colores, inspirado en Frida Kahlo." },
+    { id: 33, name: "Collar de Lactancia Bosque", price: 24, image: "21.jpg", category: "Hogar", info: "Collar de lactancia y dentición con cuentas de madera y algodón en tonos tierra, con medallón tejido." },
+    { id: 34, name: "Manta de Apego Conejito", price: 26, image: "23.jpg", category: "Bebés", info: "Manta de apego con conejito tejido, suave y perfecta para acompañar a tu bebé." }
 ];
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const observer = new IntersectionObserver(entries => {
@@ -536,14 +555,14 @@ function toggleHomenaje() {
 }
 
 const galleryImages = [
-    "vestidos.jpeg",
-    "vestidos (2).jpeg",
-    "niña.page.jpeg",
-    "vestidos (4).jpeg",
-    "vestidos (5).jpeg",
-    "para el hogar.jpeg",
-    "collar1.2.page.jpeg",
-    "collets-para el cabello.jpeg"
+    { img: "vestidos.jpeg" },
+    { img: "vestidos (2).jpeg" },
+    { img: "vestidos (3).jpeg" },
+    { img: "vestidos (4).jpeg" },
+    { img: "vestidos (5).jpeg" },
+    { img: "14.jpg", productId: 16 },
+    { img: "amigurumiconejita-sonajera.jpg", productId: 31 },
+    { img: "conjuntobeige.jpg", productId: 30 }
 ];
 
 let carouselIndex = 0;
@@ -553,10 +572,10 @@ function renderCarousel() {
     const track = document.getElementById('carouselTrack');
     const dots = document.getElementById('carouselDots');
 
-    track.innerHTML = galleryImages.map((img, i) => `
-        <div class="relative w-full h-full flex-shrink-0 cursor-pointer overflow-hidden" onclick="openGalleryModal(${i})">
-            <img src="${img}" class="absolute inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-60">
-            <img src="${img}" class="relative w-full h-full object-contain">
+    track.innerHTML = galleryImages.map((slide, i) => `
+        <div class="relative w-full h-full flex-shrink-0 cursor-pointer overflow-hidden" onclick="handleCarouselClick(${i})">
+            <img src="${slide.img}" class="absolute inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-60">
+            <img src="${slide.img}" class="relative w-full h-full object-contain">
         </div>
     `).join('');
 
@@ -565,6 +584,15 @@ function renderCarousel() {
     `).join('');
 
     startCarouselAutoplay();
+}
+
+function handleCarouselClick(i) {
+    const slide = galleryImages[i];
+    if (slide.productId) {
+        openProductModal(slide.productId);
+    } else {
+        openGalleryModal(i);
+    }
 }
 
 function carouselGoTo(i) {
@@ -593,11 +621,12 @@ function startCarouselAutoplay() {
 }
 
 function openGalleryModal(i) {
-    document.getElementById('galleryModalImg').src = galleryImages[i];
+    document.getElementById('galleryModalImg').src = galleryImages[i].img;
     const m = document.getElementById('galleryModal');
     m.classList.remove('hidden'); m.classList.add('flex');
     document.body.style.overflow = 'hidden';
 }
+
 function closeGalleryModal() {
     document.getElementById('galleryModal').classList.replace('flex', 'hidden');
     document.body.style.overflow = 'auto';
